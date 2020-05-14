@@ -1,0 +1,5 @@
+data/
+__pycache__/
+logs/
+passwd/
+admin/services/goaccess/front/
