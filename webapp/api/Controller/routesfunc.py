@@ -1,5 +1,6 @@
 from Model.basic import check, auth
 from Object.users import user
+from Object.actions import action
 import json
 
 def getauth(cn, nextc):
@@ -62,6 +63,17 @@ def gettoken(cn, nextc):
 
     use = cn.private["user"]
     err = use.gettoken()
+    return cn.call_next(nextc, err)
+
+def createdoc(cn, nextc):
+    err = check.contain(cn.pr, ["company", "name"])
+    if not err[0]:
+        return cn.toret.add_error(err[1], err[2])
+    cn.pr = err[1]
+
+    use = action(1)
+    err = use.create(cn.pr["company"], cn.pr["name"])
+    err = use.ret_bin(True)
     return cn.call_next(nextc, err)
 
 
